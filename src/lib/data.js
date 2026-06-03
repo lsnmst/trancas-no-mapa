@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 
 export async function loadBraiders() {
-  const res = await fetch('/trancadoras.csv');
+  const res = await fetch(import.meta.env.BASE_URL + 'trancadoras.csv');
   const text = await res.text();
 
   const { data } = Papa.parse(text, {

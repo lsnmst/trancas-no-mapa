@@ -195,7 +195,7 @@
   // GEOJSON
   // -------------------------
   async function initGeojson() {
-    geojsonData = await fetch("/data/brasil-estados.geojson").then((r) =>
+    geojsonData = await fetch(import.meta.env.BASE_URL + "data/brasil-estados.geojson").then((r) =>
       r.json(),
     );
 
