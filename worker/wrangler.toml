@@ -1,0 +1,10 @@
+name = "trancas-no-mapa-kobo-proxy"
+main = "index.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+KOBO_ASSET_UID = "ac95zLVxtHiKLZvE4y3Sv8"
+ALLOWED_ORIGIN = "https://lsnmst.github.io,http://localhost:5173"
+
+# Secret (do NOT put the token here): run
+#   wrangler secret put KOBO_TOKEN

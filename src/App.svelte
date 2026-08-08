@@ -1,116 +1,58 @@
 <script>
-  import { onMount } from 'svelte';
-  import { allBraiders, filters, viewMode, uniqueValues } from './lib/stores/braiders.js';
-  import { loadBraiders } from './lib/data.js';
-  import FilterPanel from './lib/FilterPanel.svelte';
-  import MapaBrasil  from './lib/MapaBrasil.svelte';
-  import InfoPanel   from './lib/InfoPanel.svelte';
+  import { onMount } from "svelte";
+  import { route } from "./lib/stores/routeStore.js";
+  import { records, loading, dataSource, initData } from "./lib/stores/dataStore.js";
+  import { ESTADOS_BY_SIGLA, slugify } from "./lib/data/estados.js";
+  import { citiesForEstado } from "./lib/utils/aggregate.js";
+  import HomeView from "./lib/views/HomeView.svelte";
+  import MapView from "./lib/views/MapView.svelte";
 
-  let loading = true;
-  let error = null;
-
-  onMount(async () => {
-    try {
-      const data = await loadBraiders();
-      allBraiders.set(data);
-      // Default: all years active
-      const anos = [...new Set(data.map(b => b.ano))].filter(Boolean).sort();
-      filters.update(f => ({ ...f, years: anos }));
-    } catch (e) {
-      error = e.message;
-      console.error('Failed to load CSV:', e);
-    } finally {
-      loading = false;
-    }
+  onMount(() => {
+    initData();
   });
+
+  $: estadoValido = $route.estado && ESTADOS_BY_SIGLA[$route.estado] ? $route.estado : null;
+
+  $: cidadeResolvida = (() => {
+    if (!estadoValido || !$route.cidadeSlug || $records.length === 0) return null;
+    const cidades = citiesForEstado($records, estadoValido);
+    const match = cidades.find((c) => slugify(c.cidade) === $route.cidadeSlug);
+    return match ? match.cidade : null;
+  })();
 </script>
 
-{#if loading}
-  <div class="loading">
-    <div class="loading-inner">
-      <p class="loading-title">ARQUIVO DE TRANÇAS</p>
-      <p class="loading-sub">carregando dados…</p>
+<main>
+  {#if $loading}
+    <div class="loading-screen">
+      <span class="braid-rule" aria-hidden="true"></span>
+      <p>Carregando o arquivo das tranças…</p>
     </div>
-  </div>
-{:else if error}
-  <div class="loading">
-    <div class="loading-inner">
-      <p class="loading-title">erro ao carregar</p>
-      <p class="loading-sub">{error}</p>
-      <p class="loading-hint">Certifique-se que o arquivo CSV está em <code>public/data/trancadoras.csv</code></p>
-    </div>
-  </div>
-{:else}
-  <main>
-    <FilterPanel />
-    <div class="map-container">
-      <MapaBrasil />
-    </div>
-    <div class="right-panel">
-      <InfoPanel />
-    </div>
-  </main>
-{/if}
+  {:else if estadoValido}
+    <MapView records={$records} estado={estadoValido} cidade={cidadeResolvida} dataSource={$dataSource} />
+  {:else}
+    <HomeView records={$records} dataSource={$dataSource} />
+  {/if}
+</main>
 
 <style>
-  :global(*, *::before, *::after) { box-sizing: border-box; margin: 0; padding: 0; }
-  :global(html, body, #app) { height: 100%; }
-  :global(body) {
-    font-family: 'DM Mono', monospace;
-    background: #f5ece4;
-    color: #1a0f0a;
-  }
-
   main {
-    display: grid;
-    grid-template-columns: 210px 1fr 260px;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .map-container {
-    position: relative;
     height: 100%;
   }
-
-  .right-panel {
-    background: #f0c817;
-    border-left: 1px solid #e8ddd5;
-    padding: 24px 20px;
-    overflow-y: auto;
-  }
-
-  /* Loading screen */
-  .loading {
-    height: 100vh;
+  .loading-screen {
+    height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #1a0f0a;
+    gap: 1rem;
+    background: var(--areia-100);
   }
-  .loading-inner { text-align: center; }
-  .loading-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    color: #f5ece4;
-    letter-spacing: 0.05em;
-    margin-bottom: 12px;
+  .loading-screen .braid-rule {
+    width: 180px;
   }
-  .loading-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: #8a6a5a;
-    letter-spacing: 0.1em;
-  }
-  .loading-hint {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: #c23b22;
-    margin-top: 12px;
-  }
-  .loading-hint code {
-    background: #2a1a12;
-    padding: 2px 6px;
-    border-radius: 2px;
+  .loading-screen p {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--ink-soft);
   }
 </style>

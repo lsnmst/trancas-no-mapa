@@ -1,7 +1,12 @@
-import App from './App.svelte';
+import "./app.css";
 
-const app = new App({
-  target: document.getElementById('app'),
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+
+import { mount } from "svelte";
+import App from "./App.svelte";
+
+mount(App, {
+  target: document.getElementById("app"),
 });
-
-export default app;

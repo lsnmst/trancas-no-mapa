@@ -1,10 +1,9 @@
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
+// Deployed at https://lsnmst.github.io/trancas-no-mapa/  -> base must match the repo name.
+// Override with VITE_BASE for local/other deployments if needed.
 export default defineConfig({
-  base: '/trancas-no-mapa/',
   plugins: [svelte()],
-  optimizeDeps: {
-    include: ['leaflet', 'papaparse'],
-  },
-});
+  base: process.env.VITE_BASE || '/trancas-no-mapa/',
+})
