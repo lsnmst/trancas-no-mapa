@@ -34,7 +34,6 @@ export async function initData() {
   loading.set(false);
 }
 
-/** Manual refresh, e.g. from a "atualizar" button, without re-mounting the app. */
 export async function refreshLive() {
   if (!isLiveModeConfigured()) return;
   try {

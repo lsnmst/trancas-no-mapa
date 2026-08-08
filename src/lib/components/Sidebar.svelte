@@ -2,9 +2,9 @@
   import { ANOS } from "../utils/koboFields.js";
   import { estadoNome, slugify } from "../data/estados.js";
 
-  export let estado = null; // sigla or null
-  export let cidade = null; // nome or null
-  export let cidades = []; // [{ cidade, count }]
+  export let estado = null;
+  export let cidade = null;
+  export let cidades = [];
   export let anosSelecionados = [];
   export let onSelectCidade = () => {};
   export let onClearEstado = () => {};
@@ -38,7 +38,8 @@
         {#each ANOS as ano}
           <button
             class="ano-pill"
-            class:active={anosSelecionados.length === 0 || anosSelecionados.includes(ano)}
+            class:active={anosSelecionados.length === 0 ||
+              anosSelecionados.includes(ano)}
             on:click={() => onToggleAno(ano)}
           >
             {ano}
@@ -48,7 +49,11 @@
     </section>
 
     <section class="block cities">
-      <h2>Selecione uma cidade</h2>
+      <h2>
+        {estado === "DF"
+          ? "Selecione a região administrativa quando indicada"
+          : "Selecione uma cidade"}
+      </h2>
       {#if cidades.length === 0}
         <p class="hint">Nenhuma cidade para este período.</p>
       {:else}

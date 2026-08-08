@@ -1,5 +1,5 @@
 <script>
-  export let images = []; // [{ url, thumbUrl }]
+  export let images = []; 
 </script>
 
 <div class="gallery" class:empty={images.length === 0}>

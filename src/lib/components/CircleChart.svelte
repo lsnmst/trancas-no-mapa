@@ -1,7 +1,7 @@
 <script>
   export let title = "";
   export let subtitle = "";
-  export let items = []; // [{ label, pct, count }]
+  export let items = [];
   export let color = "var(--terracota-500)";
 
   const MIN_R = 5;

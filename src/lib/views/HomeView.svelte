@@ -4,18 +4,18 @@
   import BrazilMap from "../components/BrazilMap.svelte";
   import { countByEstado } from "../utils/aggregate.js";
   import { goToEstado } from "../stores/routeStore.js";
-
   export let records = [];
   export let dataSource = "snapshot";
-
   $: countsBySigla = countByEstado(records);
 </script>
 
 <div class="view">
   <Sidebar estado={null} />
   <div class="main">
-    <BrazilMap {records} {countsBySigla} onSelectEstado={goToEstado} />
-    <BottomBar count={records.length} dataSource={dataSource} />
+    <div class="map-area">
+      <BrazilMap {records} {countsBySigla} onSelectEstado={goToEstado} />
+    </div>
+    <BottomBar count={records.length} {dataSource} />
   </div>
 </div>
 
@@ -29,9 +29,28 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    min-height: 0;
   }
-  .main > :global(.map-wrap) {
+  .map-area {
     flex: 1;
     min-height: 0;
+  }
+  .map-area :global(.map-wrap) {
+    height: 100%;
+  }
+  @media (max-width: 700px) {
+    .view {
+      display: block;
+    }
+    .view > :global(.sidebar) {
+      display: none;
+    }
+    .main {
+      height: 100%;
+    }
+    .map-area {
+      flex: 1;
+      min-height: 0;
+    }
   }
 </style>

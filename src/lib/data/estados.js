@@ -1,9 +1,3 @@
-// Reference table for the 26 states + Distrito Federal.
-// `labelOffset` nudges the point-count badge away from the state's
-// centroid for states whose shape is too small to hold a 2-3 digit
-// number legibly (this was the open question on the mockup: "Distrito
-// Federal com número a três cifras. Como resolver?"). The badge is
-// drawn at centroid + offset and connected back with a thin leader line.
 export const ESTADOS = [
   { sigla: "AC", nome: "Acre" },
   { sigla: "AL", nome: "Alagoas", labelOffset: [0.2, -0.2] },

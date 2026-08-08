@@ -141,7 +141,6 @@
       },
     );
 
-    // Entrambi i layer rimangono sempre presenti.
     trancaLayer.addTo(map);
     cartoLayer.addTo(map);
 
@@ -157,10 +156,8 @@
       }
     }
 
-    // Stato iniziale
     updateBaseLayer();
 
-    // Cambia solo l'opacità, mai removeLayer/addLayer.
     map.on("zoomend", updateBaseLayer);
   });
 
