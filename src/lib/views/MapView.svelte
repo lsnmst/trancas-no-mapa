@@ -11,7 +11,8 @@
     filterByAnos,
     computeStats,
   } from "../utils/aggregate.js";
-  import { goToHome, goToCidade } from "../stores/routeStore.js";
+  import { goToHome, goToCidade, goToEstado } from "../stores/routeStore.js";
+  import { estadoNome } from "../data/estados.js";
   export let records = [];
   export let estado;
   export let cidade = null;
@@ -53,13 +54,33 @@
         <Gallery {images} />
         <h2>{cidade}</h2>
       </div>
+
       <div class="map-area city-map">
-        <StateCityMap {estado} {cidade} records={estadoRecords} />
+        <div class="city-map-col">
+          <button
+            class="map-back"
+            on:click={() => goToEstado(estado)}
+            aria-label={`Voltar para ${estadoNome(estado)}`}
+          >
+            ← <span>{estadoNome(estado)}</span>
+          </button>
+
+          <StateCityMap {estado} {cidade} records={estadoRecords} />
+        </div>
       </div>
     {:else}
       <div class="map-area with-panel">
         <div class="map-col">
+          <button
+            class="map-back"
+            on:click={goToHome}
+            aria-label="Voltar ao mapa do Brasil"
+          >
+            ← <span>Brasil</span>
+          </button>
+
           <div class="sigla-badge">{estado}</div>
+
           <StateCityMap {estado} cidade={null} records={estadoRecords} />
         </div>
         <StatsPanel {stats} />
@@ -141,13 +162,49 @@
   .map-area.with-panel {
     flex-direction: row;
   }
-  .map-col {
+  .map-col,
+  .city-map-col {
     position: relative;
     flex: 1;
     min-width: 0;
   }
   .map-col > :global(.map-wrap) {
     height: 100%;
+  }
+  .map-back {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 600;
+
+    appearance: none;
+    border: 0;
+    padding: 0.3rem 0.55rem;
+
+    background: var(--areia-100);
+    color: var(--ink-soft);
+
+    border: 1px solid var(--line);
+    border-radius: 4px;
+
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+
+    transition:
+      background 120ms ease,
+      color 120ms ease;
+  }
+  .map-back:hover {
+    background: var(--cacau-600);
+    color: var(--terracota-100);
+  }
+  .map-back span {
+    font-family: var(--font-body);
+    letter-spacing: 0;
   }
   .sigla-badge {
     position: absolute;
@@ -195,6 +252,9 @@
     }
     .view > :global(.sidebar) {
       display: none;
+    }
+    .mobile-content {
+      padding-bottom: calc(42px + env(safe-area-inset-bottom));
     }
     .main {
       height: 100%;
@@ -376,6 +436,9 @@
     }
     .stats-section :global(.pct) {
       font-size: 0.68rem;
+    }
+    .city-top {
+      display: none;
     }
   }
 

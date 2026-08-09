@@ -45,4 +45,19 @@
     letter-spacing: 0.08em;
     opacity: 0.65;
   }
+
+  @media (max-width: 700px) {
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2000;
+
+      height: 42px;
+      min-height: 42px;
+
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
 </style>
