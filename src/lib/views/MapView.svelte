@@ -104,6 +104,16 @@
           {/each}
         </div>
       </section>
+      {#if cidade}
+        <section class="mobile-section mobile-gallery-section">
+          <div class="mobile-heading">
+            <span>Tranças</span>
+            <span class="mobile-state">{cidade}</span>
+          </div>
+
+          <Gallery {images} />
+        </section>
+      {/if}
       <section class="mobile-section">
         <h3>
           {estado === "DF"
@@ -278,6 +288,13 @@
       right: 10px;
       font-size: 1.35rem;
       padding: 0.15rem 0.5rem;
+    }
+
+    .mobile-gallery-section :global(.gallery) {
+      width: 100%;
+    }
+    .mobile-gallery-section {
+      padding-bottom: 0.85rem;
     }
 
     .city-top {

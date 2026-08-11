@@ -107,7 +107,7 @@
   onMount(() => {
     map = L.map(mapEl, {
       center: [-14.2, -51.9],
-      zoom: 4,
+      zoom: 4.6,
       minZoom: 3.6,
       maxZoom: 6,
       zoomControl: true,
