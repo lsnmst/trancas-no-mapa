@@ -51,7 +51,7 @@
     <section class="block cities">
       <h2>
         {estado === "DF"
-          ? "Selecione a região administrativa quando indicada"
+          ? "Selecione a região administrativa"
           : "Selecione uma cidade"}
       </h2>
       {#if cidades.length === 0}

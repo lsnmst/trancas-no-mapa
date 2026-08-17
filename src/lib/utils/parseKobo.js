@@ -82,11 +82,34 @@ function splitKoboValue(value) {
     .filter(Boolean);
 }
 
+function normalizeCidade(estado, cidade, bairro) {
+  const cidadeValue = String(cidade || "").trim();
+  const bairroValue = String(bairro || "").trim();
+
+  if (estado === "DF") {
+    if (bairroValue) return bairroValue;
+
+    if (
+      cidadeValue &&
+      cidadeValue.toLowerCase() !== "brasilia" &&
+      cidadeValue.toLowerCase() !== "brasília"
+    ) {
+      return cidadeValue;
+    }
+
+    return "Distrito Federal";
+  }
+
+  return cidadeValue;
+}
+
 export function parseKoboRecord(raw, { mediaProxyBase } = {}) {
   console.log("IMMAGINI KOBO", raw.ID, raw._attachments);
   const estado = String(raw.estado || "").trim().toUpperCase();
   const ano = String(raw.ano || "").trim();
   const { lat, lon } = parseCoords(raw);
+
+  const bairro = String(raw.bairro || "").trim();
 
   if (!VALID_ESTADOS.has(estado)) return null;
   if (!["2021", "2023", "2026"].includes(ano)) return null;
@@ -97,7 +120,7 @@ export function parseKoboRecord(raw, { mediaProxyBase } = {}) {
     uuid: raw._uuid,
     ano,
     estado,
-    cidade: (raw.cidade || "").trim(),
+    cidade: normalizeCidade(estado, raw.cidade, bairro),
     bairro: (raw.bairro || "").trim(),
     tipoArea: raw.tipo_area || null,
     comoAprendeu: splitKoboValue(

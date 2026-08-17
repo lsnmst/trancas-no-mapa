@@ -117,7 +117,7 @@
       <section class="mobile-section">
         <h3>
           {estado === "DF"
-            ? "Selecione a região administrativa quando indicada"
+            ? "Selecione a região administrativa"
             : "Selecione uma cidade"}
         </h3>
         {#if cidades.length === 0}
