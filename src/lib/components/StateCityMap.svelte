@@ -131,13 +131,14 @@
     );
 
     const cartoLayer = L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
       {
         minZoom: 10,
         maxZoom: 18,
         tileSize: 256,
         opacity: 0,
         keepBuffer: 2,
+        attribution: "Tiles © Esri",
       },
     );
 
