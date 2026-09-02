@@ -20,9 +20,9 @@
   --line: rgba(42, 24, 16, 0.14);
 
   /* -- Type -------------------------------------------------- */
-  --font-display: "Fraunces", "Iowan Old Style", serif;
-  --font-body: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", monospace;
+  --font-display: serif;
+  --font-body: system-ui, sans-serif;
+  --font-mono: monospace;
 
   --sidebar-w: 300px;
 }
