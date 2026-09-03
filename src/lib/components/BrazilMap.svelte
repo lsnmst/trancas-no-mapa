@@ -4,6 +4,36 @@
   import { allStateFeatures, featureCentroid } from "../utils/geo.js";
   import { ESTADOS_BY_SIGLA } from "../data/estados.js";
 
+  const STATE_LABEL_POSITIONS = {
+    AC: [-8.2, -72.2],
+    AL: [-9.25, -37.4],
+    AP: [0.4, -51.8],
+    AM: [-3.0, -66.5],
+    BA: [-12.5, -39.8],
+    CE: [-6, -39.5],
+    DF: [-15.8, -47.8],
+    ES: [-19.6, -40.5],
+    GO: [-17.0, -51.2],
+    MA: [-3.8, -44.0],
+    MT: [-11.5, -55.9],
+    MS: [-21.2, -54.7],
+    MG: [-19.5, -44.5],
+    PA: [-5.8, -53.0],
+    PB: [-6.8, -35.4],
+    PR: [-25.7, -51.5],
+    PE: [-8.3, -36.4],
+    PI: [-5.5, -41.8],
+    RJ: [-22.3, -43.2],
+    RN: [-5.7, -35.7],
+    RS: [-30.7, -53.0],
+    RO: [-10.8, -63.5],
+    RR: [2.0, -61.0],
+    SC: [-27.2, -49.3],
+    SP: [-23.5, -48],
+    SE: [-11.1, -37.55],
+    TO: [-11.2, -48.2],
+  };
+
   export let records = [];
   export let countsBySigla = new Map();
   export let onSelectEstado = () => {};
@@ -60,8 +90,9 @@
         .map((r) =>
           L.circleMarker([r.lat, r.lon], {
             radius: 1.6,
-            color: "#c1622f",
+            color: "#6b5a4c",
             weight: 1,
+            opacity: 0.75,
             fillColor: "#db7b41",
             fillOpacity: 0,
             interactive: false,
@@ -70,37 +101,75 @@
     ).addTo(map);
 
     const labelMarkers = [];
+
     for (const feature of allStateFeatures()) {
       const sigla = feature.properties.sigla;
       const count = countsBySigla.get(sigla) || 0;
+
+      const labelPosition = STATE_LABEL_POSITIONS[sigla];
+
+      if (labelPosition) {
+        const stateIcon = L.divIcon({
+          className: "state-label",
+          html: `<span>${sigla}</span>`,
+          iconSize: [0, 0],
+          iconAnchor: [0, 0],
+        });
+
+        labelMarkers.push(
+          L.marker(labelPosition, {
+            icon: stateIcon,
+            interactive: false,
+            zIndexOffset: 1000,
+          }),
+        );
+      }
+
       if (!count) continue;
+
       const info = ESTADOS_BY_SIGLA[sigla];
       const [clat, clon] = featureCentroid(feature);
-      let labelLat = clat,
-        labelLon = clon;
+
+      let badgeLat = clat;
+      let badgeLon = clon;
       let leaderLine = null;
+
       if (info?.labelOffset) {
         const [dLon, dLat] = info.labelOffset;
-        labelLat = clat + dLat;
-        labelLon = clon + dLon;
+
+        badgeLat = clat + dLat;
+        badgeLon = clon + dLon;
+
         leaderLine = L.polyline(
           [
             [clat, clon],
-            [labelLat, labelLon],
+            [badgeLat, badgeLon],
           ],
-          { color: "#c1622f", weight: 1, dashArray: "2,2", interactive: false },
+          {
+            color: "#c1622f",
+            weight: 1,
+            dashArray: "2,2",
+            interactive: false,
+          },
         );
+
         labelMarkers.push(leaderLine);
       }
+
       const icon = L.divIcon({
         className: "state-count-badge",
         html: `<span>${count}</span>`,
         iconSize: null,
       });
+
       labelMarkers.push(
-        L.marker([labelLat, labelLon], { icon, interactive: false }),
+        L.marker([badgeLat, badgeLon], {
+          icon,
+          interactive: false,
+        }),
       );
     }
+
     labelsLayer = L.layerGroup(labelMarkers).addTo(map);
   }
 
@@ -170,5 +239,25 @@
   }
   :global(.leaflet-container) {
     font-family: var(--font-body);
+  }
+  :global(.state-label) {
+    background: transparent;
+    border: none;
+  }
+  :global(.state-label span) {
+    display: inline-block;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--cacau-800);
+    white-space: nowrap;
+    pointer-events: none;
+    text-shadow:
+      0 1px 0 var(--off-white),
+      1px 0 0 var(--off-white),
+      0 -1px 0 var(--off-white),
+      -1px 0 0 var(--off-white);
   }
 </style>

@@ -82,7 +82,13 @@
           <div class="sigla-badge">{estado}</div>
 
           <StateCityMap {estado} cidade={null} records={estadoRecords} />
+
+          <div class="city-selection-hint">
+            <span class="hint-mobile">Toque em uma cidade no painel</span>
+            <span class="hint-desktop">Selecione uma cidade no painel</span>
+          </div>
         </div>
+
         <StatsPanel {stats} />
       </div>
     {/if}
@@ -253,6 +259,38 @@
   }
   .mobile-content {
     display: none;
+  }
+  .city-selection-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+
+    z-index: 500;
+
+    white-space: nowrap;
+
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+
+    color: var(--cacau-800);
+
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+
+    background: rgba(250, 245, 234, 0.82);
+
+    pointer-events: none;
+  }
+
+  .hint-mobile {
+    display: none;
+  }
+
+  .hint-desktop {
+    display: inline;
   }
 
   @media (max-width: 700px) {
@@ -469,6 +507,13 @@
     }
     .stats-section :global(.stats-panel) {
       grid-template-columns: 1fr;
+    }
+    .hint-mobile {
+      display: inline;
+    }
+
+    .hint-desktop {
+      display: none;
     }
   }
 </style>

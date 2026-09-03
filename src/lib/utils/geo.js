@@ -102,3 +102,39 @@ function boundsPad([[s, w], [n, e]], padFactor) {
 }
 
 export { boundsPad };
+
+/**  */
+
+export function findLabelPoint(feature) {
+  const [clat, clon] = featureCentroid(feature);
+
+  const candidates = [
+    [clat + 0.8, clon],
+    [clat - 0.8, clon],
+    [clat, clon + 0.8],
+    [clat, clon - 0.8],
+
+    [clat + 0.5, clon + 0.5],
+    [clat + 0.5, clon - 0.5],
+    [clat - 0.5, clon + 0.5],
+    [clat - 0.5, clon - 0.5],
+
+    [clat + 1.2, clon],
+    [clat - 1.2, clon],
+    [clat, clon + 1.2],
+    [clat, clon - 1.2],
+
+    [clat + 0.3, clon],
+    [clat - 0.3, clon],
+    [clat, clon + 0.3],
+    [clat, clon - 0.3],
+  ];
+
+  for (const [lat, lon] of candidates) {
+    if (pointInFeature(lat, lon, feature)) {
+      return [lat, lon];
+    }
+  }
+
+  return [clat, clon];
+}
