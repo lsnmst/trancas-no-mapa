@@ -11,12 +11,14 @@
     filterByAnos,
     computeStats,
   } from "../utils/aggregate.js";
+  import { ANOS } from "../utils/koboFields.js";
   import { goToHome, goToCidade, goToEstado } from "../stores/routeStore.js";
   import { estadoNome } from "../data/estados.js";
   export let records = [];
   export let estado;
   export let cidade = null;
   export let dataSource = "snapshot";
+  
   let anosSelecionados = [];
   function toggleAno(ano) {
     anosSelecionados = anosSelecionados.includes(ano)
@@ -36,6 +38,18 @@
       ? "no Período 2021–2026"
       : `em ${anosSelecionados.join(", ")}`;
   $: images = cidade ? cidadeRecords.flatMap((r) => r.images || []) : [];
+
+let mobileContent;
+let previousCidade = null;
+$: if (cidade !== previousCidade) {
+  previousCidade = cidade;
+  if (mobileContent) {
+    mobileContent.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }
+}
 </script>
 
 <div class="view">
@@ -93,13 +107,13 @@
       </div>
     {/if}
 
-    <div class="mobile-content">
+    <div class="mobile-content" bind:this={mobileContent}>
       <section class="mobile-section">
         <div class="mobile-heading">
           <span>Período</span> <span class="mobile-state">{estado}</span>
         </div>
         <div class="year-list">
-          {#each [2021, 2022, 2026] as ano}
+          {#each ANOS as ano}
             <button
               class:active={anosSelecionados.length === 0 ||
                 anosSelecionados.includes(ano)}
@@ -381,7 +395,7 @@
     .mobile-state {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 1rem;
+      font-size: 1.5rem;
       letter-spacing: 0;
       text-transform: none;
       color: var(--cacau-800);

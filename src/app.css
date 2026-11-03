@@ -92,6 +92,10 @@ a {
   display: none !important;
 }
 
+.leaflet-marker-icon.leaflet-interactive {
+  pointer-events: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

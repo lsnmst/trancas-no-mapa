@@ -31,6 +31,16 @@
     {/if}
   </section>
 
+  {#if !estado}
+    <div class="map-disclaimer">
+      <strong>Atenção:</strong> O mapa não se configura como um censo demográfico
+      ou estatístico da totalidade de trançadeiras e trancistas em território nacional.
+      Trata-se de uma cartografia documental construída de forma colaborativa e voluntária,
+      registrando o universo de detentoras e profissionais que acessaram e se inscreveram
+      no mapeamento colaborativo digital do projeto.
+    </div>
+  {/if}
+
   {#if estado}
     <section class="block">
       <h2>Período</h2>
@@ -129,7 +139,20 @@
     color: rgba(250, 245, 234, 0.6);
     font-style: italic;
   }
+  .map-disclaimer {
+    margin: 1rem;
+    padding: 0.85rem;
+    border: 1px solid rgba(250, 245, 234, 0.3);;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 1.5;
+    color: rgba(250, 245, 234, 0.6);
+  }
 
+  .map-disclaimer strong {
+    font-weight: 700;
+  }
   .estado-pill {
     width: 100%;
     display: flex;

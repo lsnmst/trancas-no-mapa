@@ -56,6 +56,7 @@
     clusterLayer = L.markerClusterGroup({
       maxClusterRadius: 34,
       spiderfyOnMaxZoom: true,
+      zoomToBoundsOnClick: false,
       iconCreateFunction: (cluster) =>
         L.divIcon({
           html: `<span>${cluster.getChildCount()}</span>`,
@@ -101,12 +102,27 @@
       maxZoomBoost = 4;
     }
 
+    map.stop();
+
     map.setMaxBounds(null);
-    map.fitBounds(bounds, { padding: [24, 24] });
-    const fittedZoom = map.getZoom();
+    map.setMinZoom(3);
+    map.setMaxZoom(12);
+
+    const cityLatLngBounds = L.latLngBounds(bounds);
+    const targetZoom = map.getBoundsZoom(
+      cityLatLngBounds,
+      false,
+      L.point(24, 24),
+    );
+
+    map.setView(cityLatLngBounds.getCenter(), targetZoom, { animate: false });
+
+    const fittedZoom = targetZoom;
+
     map.setMinZoom(fittedZoom);
-    map.setMaxZoom(fittedZoom + maxZoomBoost);
-    map.setMaxBounds(boundsForLock);
+    map.setMaxZoom(Math.min(fittedZoom + maxZoomBoost, 12));
+
+    map.setMaxBounds(L.latLngBounds(boundsForLock));
     map.options.maxBoundsViscosity = 0.8;
   }
 
