@@ -107,7 +107,7 @@
   }
   .label {
     font-size: 0.78rem;
-    color: var(--ink);
+    color: var(--ink-soft);
   }
   .empty {
     grid-column: 1 / -1;

@@ -32,7 +32,7 @@
     font-size: 1rem;
   }
   .count {
-    font-family: var(--font-mono);
+    font-family: var(--font-display);
     font-style: normal;
     font-weight: 700;
     margin-right: 0.2rem;

@@ -20,8 +20,8 @@
   --line: rgba(42, 24, 16, 0.14);
 
   /* -- Type -------------------------------------------------- */
-  --font-display: serif;
-  --font-body: system-ui, sans-serif;
+  --font-display: 'Magic', serif;;
+  --font-body: 'Prompt', system-ui, sans-serif;
   --font-mono: monospace;
 
   --sidebar-w: 300px;
@@ -42,6 +42,14 @@
 ::-webkit-scrollbar-thumb {
   background: var(--terracota-300);
   border-radius: 2px;
+}
+
+@font-face {
+  font-family: "Magic";
+  src: url("assets/fonts/Magic-Retro.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 html,

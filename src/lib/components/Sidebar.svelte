@@ -13,9 +13,31 @@
 
 <nav class="sidebar" aria-label="Filtros do mapa">
   <header class="brand">
-    <p class="eyebrow">Tranças no Mapa</p>
+    <!-- <p class="eyebrow">Tranças no Mapa</p> -->
     <h1>Arquivo<br />das Tranças</h1>
     <span class="braid-rule" aria-hidden="true"></span>
+
+    {#if !estado}
+      <p class="disclaimer">
+        O <b>Arquivo das Tranças</b> reúne registros de trançadeiras e
+        trancistas negras de diferentes territórios do Brasil, destacando suas
+        trajetórias, experiências e saberes relacionados ao ofício de trançar. A
+        cartografia apresenta a distribuição territorial das profissionais que
+        participaram do mapeamento colaborativo do
+        <b
+          ><a
+            href="https://fiosdaancestralidade.com/"
+            target="_blank"
+            rel="noreferrer">Tranças no Mapa</a
+          ></b
+        >, constituindo um registro documental em permanente construção sobre os
+        modos de saber e fazer das mulheres negras.<br /><br />Essa versão
+        apresenta o mapa como um arquivo documental e territorial, e não apenas
+        como uma ferramenta de localização. Também reforça a dimensão
+        patrimonial da iniciativa e o reconhecimento das trancistas como
+        detentoras de conhecimentos.
+      </p>
+    {/if}
   </header>
 
   <section class="block">
@@ -121,6 +143,7 @@
   .block {
     padding: 1rem 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
   }
   .block.cities {
     flex: 1;
@@ -135,18 +158,27 @@
   }
   .hint {
     margin: 0;
-    font-size: 0.82rem;
+    font-size: 0.7rem;
+    line-height: 1.1;
     color: rgba(250, 245, 234, 0.6);
     font-style: italic;
   }
   .map-disclaimer {
     margin: 1rem;
     padding: 0.85rem;
-    border: 1px solid rgba(250, 245, 234, 0.3);;
+    border: 1px solid rgba(250, 245, 234, 0.3);
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.68rem;
     line-height: 1.5;
+    color: rgba(250, 245, 234, 0.6);
+  }
+
+  .disclaimer {
+    margin: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.2;
     color: rgba(250, 245, 234, 0.6);
   }
 

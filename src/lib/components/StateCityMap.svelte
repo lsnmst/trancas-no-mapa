@@ -158,8 +158,22 @@
       },
     );
 
+    const cartoLabels = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+      {
+        minZoom: 10,
+        maxZoom: 18,
+        tileSize: 256,
+        opacity: 0.2,
+        keepBuffer: 2,
+        attribution: "Tiles © Esri",
+        pane: "overlayPane",
+      },
+    );
+
     trancaLayer.addTo(map);
     cartoLayer.addTo(map);
+    cartoLabels.addTo(map);
 
     function updateBaseLayer() {
       const zoom = map.getZoom();

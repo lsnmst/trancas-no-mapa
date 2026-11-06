@@ -99,6 +99,7 @@
       letter-spacing: 0.04em;
 
       color: var(--cacau-800);
+      background: var(--terracota-100);
 
       padding: 0.45rem 0.7rem;
       border: 1px solid var(--line);
