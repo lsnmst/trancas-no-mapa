@@ -3,7 +3,8 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         trancistas negras de diferentes territórios do Brasil, destacando suas
         trajetórias, experiências e saberes relacionados ao ofício de trançar. A
         cartografia apresenta a distribuição territorial das profissionais que
-        participaram do mapeamento colaborativo do <b><a href="https://fiosdaancestralidade.com/" target="_blank" rel="noreferrer">Tranças no Mapa</a></b>, constituindo um registro documental em permanente construção sobre os
+        participaram do mapeamento colaborativo do <b>Tranças
+          no Mapa</b>, constituindo um registro documental em permanente construção sobre os
         modos de saber e fazer das mulheres negras.<br/><br/>Essa versão
         apresenta o mapa como um arquivo documental e territorial, e não apenas
         como uma ferramenta de localização. Também reforça a dimensão
