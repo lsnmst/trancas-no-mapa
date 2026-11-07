@@ -25,11 +25,12 @@
         cartografia apresenta a distribuição territorial das profissionais que
         participaram do mapeamento colaborativo do
         <b
-          ><a
+          ><!-- <a
             href="https://fiosdaancestralidade.com/"
             target="_blank"
-            rel="noreferrer">Tranças no Mapa</a
-          ></b
+            rel="noreferrer"> -->Tranças
+          no Mapa<!-- </a
+          > --></b
         >, constituindo um registro documental em permanente construção sobre os
         modos de saber e fazer das mulheres negras.<br /><br />Essa versão
         apresenta o mapa como um arquivo documental e territorial, e não apenas
